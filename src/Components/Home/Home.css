@@ -1,0 +1,100 @@
+.bodyContainer {
+    position: absolute;
+    top: 75px;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+  }
+  
+  @media (width < 890px) {
+    .menubarContainer {
+      display: none;
+    }
+    .dashBoardContainer {
+      width: 100%;
+      margin: 5px 20px 0 20px;
+      border-radius: 10px 10px 0 0;
+    }
+    .miniMenubarContainer {
+      position: absolute;
+      height: 100vh;
+      width: 280px;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: 0.4s;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+    .miniMenuBrandLetterImage {
+      width: 120px;
+      align-self: center;
+      position: relative;
+      top: -210px;
+    }
+  }
+  
+  @media (width > 890px) {
+    .menubarContainer {
+      overflow-y: hidden;
+      transition: 0.5s;
+      width: 325px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: 0.4s;
+    }
+    .dashBoardContainer {
+      width: 100%;
+      margin: 5px 20px 0 0;
+      border-radius: 10px 10px 0 0;
+    }
+  
+    .miniMenuBrandLetterImage {
+      opacity: 0;
+    }
+  }
+  
+  .menubarContainer:hover {
+    overflow-y: auto;
+  }
+  
+  .hideMenu {
+    opacity: 0;
+    width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s;
+  }
+  
+  .hideMiniMenu {
+    opacity: 0;
+    width: 0;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+  }
+  
+  .dashBoardContainer{
+    overflow-y: auto;
+  }
+  
+  /* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  .dashBoardContainer {
+    scrollbar-width: 0;
+  }
+  
+  /* Chrome, Edge, and Safari */
+  .dashBoardContainer::-webkit-scrollbar {
+    width: 0px;
+    height:0px;
+  }
+  

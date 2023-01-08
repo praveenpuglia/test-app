@@ -1,0 +1,142 @@
+.navbarHeaderContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 75px;
+}
+
+.navbarLogoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 225px;
+}
+
+.navbarSearchContainer {
+  display: flex;
+  align-items: center;
+}
+
+.brandLogoImage {
+  width: 50px;
+  border-radius: 2px;
+}
+.brandLetterImage {
+  width: 120px;
+}
+
+.navbarHamIcon {
+  stroke-width: 2.1px;
+  font-size: 19px;
+  padding: 6px 1px;
+}
+
+.navbarSearchIcon {
+  stroke-width: 2.1px;
+  font-size: 18px;
+  color: #c0c0c0;
+  margin-left: 10px;
+}
+
+.navbarFilterIcon {
+  stroke-width: 0.6px;
+  font-size: 19px;
+  padding: 6px 1px;
+}
+
+.navbarSearchInput {
+  width: 340px;
+  height: 30px;
+  margin: 0 15px;
+  border: none;
+  background-color: transparent;
+  font-family: "Poppins", sans-serif;
+  font-size: 500;
+  font-size: 15px;
+}
+
+.navbarSearchInput:focus {
+  outline: none;
+}
+
+.navbarSearchInput::placeholder {
+  font-family: "Poppins", sans-serif;
+  color: #d3d3d3;
+  font-size: 15px;
+}
+
+.navbarMiniSearchInput {
+  height: 30px;
+  width: 10px;
+  flex-grow: 1;
+  margin: 0 10px;
+  border: none;
+  background-color: transparent;
+  font-family: "Poppins", sans-serif;
+  font-size: 500;
+  font-size: 15px;
+}
+
+.navbarMiniSearchInput:focus {
+  outline: none;
+}
+
+.navbarMiniSearchInput::placeholder {
+  font-family: "Poppins", sans-serif;
+  color: #d3d3d3;
+  font-size: 15px;
+}
+
+@media (width < 890px) {
+  .navbarLogoContainer {
+    display: none;
+  }
+  .navbarMiniActionsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+  }
+  .navbarSearchMiniActionsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 75px;
+    margin-right: 10px;
+  }
+}
+
+@media (width > 890px) {
+  .navbarMiniActionsContainer {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.eachSearchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 5px;
+}
+
+.eachSearchContainer:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.eachSearchContainer:hover {
+  cursor: pointer;
+}
+
+.eachSearchMovieImage {
+  width: 50px;
+  border-radius: 4px;
+}
+.eachSearchMovieTitle {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 500;
+}

@@ -1,0 +1,327 @@
+@media (600px <= width <= 1200px) {
+    .dashboardPrimaryContainer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .imdbEachMoviePoster {
+      border-radius: 10px;
+      height: 155px;
+      width: 120px;
+    }
+    .secondaryDashboardContainer {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 30px;
+    }
+  }
+  
+  @media (width >= 1200px) {
+    .dashboardPrimaryContainer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .imdbEachMoviePoster {
+      border-radius: 10px;
+      height: 165px;
+      width: 120px;
+    }
+    .secondaryDashboardContainer {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 30px;
+    }
+  }
+  
+  @media (width <= 600px) {
+    .dashboardPrimaryContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .imdbEachMoviePoster {
+      border-radius: 10px;
+      height: 145px;
+      width: 100px;
+    }
+    .secondaryDashboardContainer {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 20px;
+    }
+  }
+  
+  .primaryDashboardContainer {
+    margin: 15px 30px;
+  }
+  
+  .primaryDashBoardMoviesIcons {
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .dashBoardPrimaryHeading {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .dashBoardPrimaryPara {
+    opacity: 0.7;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .primaryDashBoardMiniContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .primaryDashBoardMiniMainPara {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-weight: 600;
+    font-size: 17px;
+  }
+  
+  .primaryDashBoardMiniMiniPara {
+    opacity: 0.7;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .boxOfficeButtonsMainContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .boxOfficeButton {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.4s;
+  }
+  .selectedBoxOfficeButton {
+    background-color: #1e88e5;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px;
+    border-radius: 5px;
+    transition: 0.4s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+  
+  .secondaryDashboardHeading {
+    font-size: 26px;
+    margin: 10px 0 0 20px;
+    font-weight: 600;
+  }
+  
+  .imdbHeaderPara {
+    margin: 0 0 0 5px;
+    color: #212121;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .imdbMoviesDetailsContainer {
+    height: 710px;
+    overflow-y: auto;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #fff8e1;
+    color: #212121;
+  }
+  
+  .imdbMoviesDetailsContainer::-webkit-scrollbar {
+    height: 0px;
+    width: 0px;
+  }
+  
+  .imdbEachMovieDetailsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 3px;
+    height: 170px;
+    border-radius: 10px;
+    transition: 0.3s;
+    border: solid 1px #ffc107;
+  }
+  
+  .imdbEachMovieDetailsSubContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10px;
+  }
+  
+  .imdbEachMovieDetailsContainer:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+      rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+      rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    transition: 0.3s;
+  }
+  
+  .imdbEachMovieDetailsTitleContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 150px;
+    width: 75%;
+  }
+  
+  .imdbEachMovieTitle {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  
+  .imdbEachMovieIconsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .imdbEachMoviePara {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px 0;
+    line-height: 0.6;
+  }
+  
+  .imdbEachMovieIcon {
+    padding: 5px 0;
+  }
+  
+  @media (width >= 767px) {
+    .secondaryDashBoardRatingContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  
+  @media (width <= 767px) {
+    .secondaryDashBoardRatingContainer {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .tomatoSubHeadingParas {
+    margin: 0 0 0 10px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .eachTomatoMovieContainer:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+      rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+      rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    transition: 0.3s;
+  }
+  
+  .eachTomatoMovieSubContainer {
+    margin-left: 10px;
+    width: 100%;
+  }
+  
+  .tomatoCriticsContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .eachMovieSubHeading {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 15px 0 0 0;
+    line-height: 1;
+  }
+  
+  @media (width >= 1000px) {
+    .tomatoPoster {
+      width: 160px;
+    }
+    .eachTomatoMiniMovieContainer {
+      display: none;
+    }
+    .eachTomatoMovieContainer {
+      display: flex;
+      align-items: center;
+      margin: 5px;
+      border: solid 1px #fa320a;
+      border-radius: 10px;
+      transition: 0.3s;
+      padding: 3px;
+    }
+    .tomatoEachMovieTitle {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1;
+      margin: 10px 0 0 0;
+    }
+  
+    .tomatoEachMovieYear {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 3px 0 0 0;
+    }
+  }
+  
+  @media (width <= 1000px) {
+    .tomatoPoster {
+      width: 100px;
+    }
+    .eachTomatoMiniMovieContainer {
+      margin: 5px;
+      border: solid 1px #fa320a;
+      border-radius: 10px;
+      transition: 0.3s;
+      padding: 3px;
+    }
+    .eachTomatoMovieContainer {
+      display: none;
+    }
+    .tomatoEachMovieTitle {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 10px 0 0 0;
+    }
+    .tomatoEachMovieYear {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 3px 0 0 0;
+    }
+    .eachTomatoMovieMiniSubContainer {
+      display: flex;
+    }
+  }
+  
+  .dashBoardLoaderContainer {
+    display: flex;
+    width: 100%;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+  }
+  
