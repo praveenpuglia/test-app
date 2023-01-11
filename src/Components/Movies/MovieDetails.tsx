@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoLanguageSharp } from "react-icons/io5";
 import { HiOutlineLocationMarker } from "react-icons/hi";
@@ -12,6 +11,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Autoplay, FreeMode, Pagination } from "swiper";
+import format from 'date-fns/format'
 
 import lightUser from "../../images/lightUser.png"
 import darkUser from "../../images/darkUser.png"
@@ -88,7 +88,7 @@ function MovieDetails(props: any) {
                     <MoviePlot isDark={ThemeMenu.theme}>{data.plot}</MoviePlot>
                     <MovieDate isDark={ThemeMenu.theme}>
                         <FaRegCalendarAlt className="movieDetailsMovieCalendarIcon" style={styles.iconColor} />
-                        {moment(data.released).format('MMMM Do YYYY')}
+                        {format(new Date(data.released), 'MMMM do yyyy')}
                     </MovieDate>
                     <div className="movieDetailsMovieGenreContainer">
                         <BiCategory className="movieDetailsMovieGenreIcon" style={styles.iconColor} />
@@ -276,7 +276,7 @@ function MovieDetails(props: any) {
                             <EachMovieDetailsCommentContainer isDark={ThemeMenu.theme} >
                                 <MovieDetailsCommentName isDark={ThemeMenu.theme}>{eachComment.name}</MovieDetailsCommentName>
                                 <MovieDetailsCommentDate isDark={ThemeMenu.theme}>
-                                    {moment(eachComment.date).format('Do MMMM YYYY')}</MovieDetailsCommentDate>
+                                    {format(new Date(data.released), 'MMMM do yyyy')}</MovieDetailsCommentDate>
                                 <MovieDetailsCommentText isDark={ThemeMenu.theme}>{eachComment.text}</MovieDetailsCommentText>
                             </EachMovieDetailsCommentContainer>
                         </SwiperSlide>
