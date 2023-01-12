@@ -1,0 +1,356 @@
+@media (width > 375px) {
+  .movieDetailsHeaderContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .movieDetailMainContainer {
+    margin: 10px 20px 30px 20px;
+  }
+  .movieDetailsBackArrowButton{
+    margin-left: -15px;
+  }
+  .movieDetailsHeaderSubContainer {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .movieDetailsHeaderMiniContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .movieDetailsMovieLanguageContainer {
+    display: flex;
+    margin: 15px 0 0 0;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  .movieDetailsMovieLocationContainer {
+    display: flex;
+    margin: 15px 0 0 0;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  .movieDetailsRatingAndAwardsSubContainer {
+    margin: 10px 0;
+    width: 200px;
+    padding: 5px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .movieDetailsBodyContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .movieDetailsBodyPlotContainer {
+    width: 100%;
+  }
+
+  .movieDetailsBodyCastContainer {
+    width: 100%;
+  }
+  .hideHorizontalLineInLarge {
+    display: block;
+  }
+  .similarMoviesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0 0 0;
+  }
+  .similarMoviePoster{
+    height: 180px;
+  }
+}
+
+@media (768px <= width <= 1024px) {
+  .movieDetailsHeaderContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .movieDetailMainContainer {
+    margin: 10px 40px 30px 40px;
+  }
+  .movieDetailsBackArrowButton{
+    margin-left: -30px;
+  }
+  .movieDetailsHeaderSubContainer {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .movieDetailsHeaderMiniContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  .movieDetailsMovieLanguageContainer {
+    display: flex;
+    margin: 15px 0 0 0;
+    width: 50%;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  .movieDetailsMovieLocationContainer {
+    display: flex;
+    margin: 15px 0 0 0;
+    width: 50%;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  .movieDetailsRatingAndAwardsSubContainer {
+    margin: 10px 0;
+    width: 200px;
+    padding: 5px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .movieDetailsBodyContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+  .movieDetailsBodyPlotContainer {
+    width: 68%;
+  }
+
+  .movieDetailsBodyCastContainer {
+    width: 28%;
+  }
+  .hideHorizontalLineInLarge {
+    display: none;
+  }
+  .similarMoviesContainer {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0 0 0;
+  }
+  .similarMoviePoster{
+    height: 180px;
+  }
+}
+
+@media (width > 1024px) {
+  .movieDetailsHeaderContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .movieDetailMainContainer {
+    margin: 10px 40px 30px 40px;
+  }
+  .movieDetailsBackArrowButton{
+    margin-left: -30px;
+  }
+  .movieDetailsHeaderSubContainer {
+    width: 65%;
+  }
+  .movieDetailsHeaderMiniContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  .movieDetailsMovieLanguageContainer {
+    display: flex;
+    margin: 15px 0 0 0;
+    width: 50%;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  .movieDetailsMovieLocationContainer {
+    display: flex;
+    margin: 15px 0 0 0;
+    width: 50%;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+  }
+  .movieDetailsRatingAndAwardsSubContainer {
+    margin: 10px 0;
+    width: 200px;
+    padding: 5px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .movieDetailsBodyContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+  .movieDetailsBodyPlotContainer {
+    width: 68%;
+  }
+
+  .movieDetailsBodyCastContainer {
+    width: 28%;
+  }
+  .hideHorizontalLineInLarge {
+    display: none;
+  }
+  .similarMoviesContainer {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0 0 0;
+  }
+  .similarMoviePoster{
+    height: 280px;
+  }
+}
+
+.movieDetailsMovieCalendarIcon {
+  font-size: 24px;
+  margin-right: 5px;
+}
+
+.movieDetailsMovieGenreContainer {
+  display: flex;
+  align-items: center;
+  margin: 20px 0 0 0;
+}
+
+.movieDetailsMovieGenreIcon {
+  font-size: 24px;
+  margin-right: 5px;
+  stroke-width: 0.2;
+}
+
+.movieDetailsMovieLanguageIcon {
+  font-size: 24px;
+  margin-right: 10px;
+  stroke-width: 0.2;
+}
+
+.movieDetailsMovieLocationIcon {
+  font-size: 24px;
+  margin-right: 10px;
+  stroke-width: 0.7;
+}
+
+.movieDetailsMovieIMDB {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 600;
+  color: #ffc107;
+}
+
+.movieDetailsMovieTomato {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 600;
+  color: #fa320a;
+}
+
+.movieDetailsMovieAward {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 600;
+  color: #00c853;
+}
+
+.movieDetailsMovieIMDBSubContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-top: 10px;
+}
+
+.movieDetailsMovieIMDBSubRatingsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.movieDetailsMovieRatingReviewsPara {
+  margin: 5px 0;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.movieDetailsRatingStarIcon {
+  font-size: 18px;
+  margin: 3px 0;
+}
+
+.movieDetailsRatingUserCountIcon {
+  font-size: 22px;
+  margin: 1px 0;
+}
+
+.movieDetailsMovieCastContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 0 0;
+}
+
+.movieDetailsMovieCastSubContainer {
+  display: flex;
+  align-items: center;
+  margin: 1px 0;
+}
+
+.movieDetailsMovieWebsite {
+  padding-top: 10px;
+}
+
+.similarMoviePoster {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  transition: 0.3s all ease-in-out;
+}
+
+.similarMoviePoster:hover {
+  transform: scale(1.03);
+  transition: 0.3s all ease-in-out;
+}
+
+.eachSimilarMovieTitle {
+  margin: 0 0 2px 0;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.swiper-slide {
+  margin: 20px 0;
+}
+
+.movieDetailsBackArrowButton{
+  font-size: 34px;
+  stroke-width: 1;
+}
+
+.movieDetailsBackArrowButton:hover{
+  cursor: pointer;
+}
