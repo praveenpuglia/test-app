@@ -10,7 +10,7 @@ import { Button, SearchContainer, MiniSearchContainer, MoviesListSearchContainer
 
 import brandLetterLight from "../../images/logow.png";
 import brandLetterDark from "../../images/logod.png";
-import { searchMovies } from "../../Api/Movies/MoviesApi";
+import { searchMovies } from "../../Services/Movies/MoviesService";
 
 interface Props {
   isClose: boolean,

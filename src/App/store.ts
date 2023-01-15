@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import themeMenuSlice from "../features/state"
+import serviceStateSlice from "../features/serviceState"
+import dataStateSlice from "../features/dataState"
 
 export const store = configureStore({
     reducer: {
-        ThemeMenu: themeMenuSlice
+        ThemeMenu: themeMenuSlice,
+        ServiceState: serviceStateSlice,
+        Data: dataStateSlice
     }
 })
 

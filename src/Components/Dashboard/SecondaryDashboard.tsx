@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BsCalendarDate, BsStarFill } from "react-icons/bs";
 import { MdSupervisorAccount } from "react-icons/md";
 import { BsSpeedometer2 } from "react-icons/bs";

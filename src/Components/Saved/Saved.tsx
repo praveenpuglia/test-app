@@ -1,8 +1,10 @@
 import React from 'react'
+import ComingSoon from '../Comming Soon/ComingSoon'
+
 
 function Saved() {
   return (
-    <div>Saved</div>
+    <ComingSoon componentName={Saved} />
   )
 }
 

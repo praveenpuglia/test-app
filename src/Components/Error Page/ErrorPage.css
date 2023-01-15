@@ -1,0 +1,63 @@
+@media (width >1024px) {
+  .errorPageContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow-x: hidden;
+    margin: 80px 30px;
+  }
+  .errorPageParaContainer {
+    width: 40%;
+  }
+  .largeDeviceErrorImage {
+    width: 600px;
+  }
+  .smallDeviceErrorImage {
+    display: none;
+  }
+}
+
+@media (768px <= width <= 1024px) {
+  .errorPageContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+    overflow-x: hidden;
+    margin: 180px 30px;
+  }
+  .errorPageParaContainer {
+    width: 50%;
+  }
+  .largeDeviceErrorImage {
+    width: 350px;
+  }
+  .smallDeviceErrorImage {
+    display: none;
+  }
+}
+
+@media (768px > width) {
+  .errorPageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  .largeDeviceErrorImage {
+    display: none;
+  }
+  .errorPageParaContainer {
+    width: 100%;
+    text-align: center;
+  }
+  .smallDeviceErrorImage {
+    width: 400px;
+  }
+}
