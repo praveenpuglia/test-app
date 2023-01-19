@@ -11,3 +11,28 @@ body {
 button:hover {
   cursor: pointer;
 }
+
+
+@media (width > 375px) {
+  .MuiDialog-paper {
+    border-radius: 10px !important;
+    height: 300px !important;
+    background-color: #000000 !important;
+  }
+}
+
+@media (768px <= width <= 1024px) {
+  .MuiDialog-paper {
+    border-radius: 10px !important;
+    height: 500px !important;
+    background-color: #000000 !important;
+  }
+}
+
+@media (width > 1024px) {
+  .MuiDialog-paper {
+    border-radius: 10px !important;
+    height: 500px !important;
+    background-color: #000000 !important;
+  }
+}

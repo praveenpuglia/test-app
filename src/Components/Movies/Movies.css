@@ -1,244 +1,242 @@
 .allMoviesCard {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    flex-wrap: wrap;
-    overflow-x: hidden;
-    margin-top: 20px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  margin-top: 20px;
+}
+
+@media (width <= 576px) {
+  .allMoviesCard {
+    gap: 10px;
   }
-  
-  @media (width <= 576px) {
-    .allMoviesCard {
-      gap: 10px;
-    }
-    .eachMovieCard {
-      position: relative;
-      width: 45%;
-      background-color: #fafafa;
-      border-radius: 5px;
-      border: solid 3px #fafafa;
-      transition: 0.3s;
-      height: 300px;
-    }
-    .eachMovieTitleCardPoster {
-      width: 100%;
-      height: 210px;
-      border-radius: 3px 3px 0 0;
-      transition: 0.3s;
-    }
-  }
-  
-  @media (576px <= width <= 768px) {
-    .allMoviesCard {
-      gap: 10px;
-    }
-    .eachMovieCard {
-      position: relative;
-      width: 30%;
-      background-color: #fafafa;
-      border-radius: 5px;
-      border: solid 3px #fafafa;
-      transition: 0.3s;
-      height: 300px;
-    }
-    .eachMovieTitleCardPoster {
-      width: 100%;
-      height: 210px;
-      border-radius: 3px 3px 0 0;
-      transition: 0.3s;
-    }
-  }
-  
-  @media (768px <= width <= 992px) {
-    .allMoviesCard {
-      gap: 20px;
-    }
-    .eachMovieCard {
-      position: relative;
-      width: 30%;
-      background-color: #fafafa;
-      border-radius: 5px;
-      border: solid 3px #fafafa;
-      transition: 0.3s;
-      height: 360px;
-    }
-    .eachMovieTitleCardPoster {
-      width: 100%;
-      height: 270px;
-      border-radius: 3px 3px 0 0;
-      transition: 0.3s;
-    }
-  }
-  
-  @media (992px <= width <= 1100px) {
-    .allMoviesCard {
-      gap: 20px;
-    }
-    .eachMovieCard {
-      position: relative;
-      width: 30%;
-      background-color: #fafafa;
-      border-radius: 5px;
-      border: solid 3px #fafafa;
-      transition: 0.3s;
-      height: 360px;
-    }
-    .eachMovieTitleCardPoster {
-      width: 100%;
-      height: 270px;
-      border-radius: 3px 3px 0 0;
-      transition: 0.3s;
-    }
-  }
-  
-  @media (width >= 1100px) {
-    .allMoviesCard {
-      gap: 22px;
-    }
-    .eachMovieCard {
-      position: relative;
-      width: 20%;
-      background-color: #fafafa;
-      border-radius: 5px;
-      border: solid 3px #fafafa;
-      transition: 0.3s;
-      height: 390px;
-    }
-    .eachMovieTitleCardPoster {
-      width: 100%;
-      height: 300px;
-      border-radius: 3px 3px 0 0;
-      transition: 0.3s;
-    }
-  }
-  
-  .eachMovieCard:hover {
-    cursor: pointer;
-  
-    transition: 0.3s;
-    border: solid 3px;
-  }
-  
-  .lightEachMovieCard:hover {
-    box-shadow: #673ab7 0px 6px 12px -2px, #673ab7 0px 3px 7px -3px;
-    border-color: #4527a0;
-  }
-  
-  .darkEachMovieCard:hover {
-    box-shadow: #90caf9 0px 6px 12px -2px, #90caf9 0px 3px 7px -3px;
-    border-color: #1565c0;
-  }
-  
-  .eachMovieCard:hover .eachMovieTitleCardPoster {
-    opacity: 0.4;
-    transition: 0.3s;
-  }
-  
-  .eachMovieCard:hover .eachMovieTitleCardPara {
-    opacity: 0.3;
-    transition: 0.3s;
-  }
-  
-  .eachMovieCard:hover .eachMovieYearCardPara {
-    opacity: 0.3;
-    transition: 0.3s;
-  }
-  
-  .eachMovieTitleCardPara {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 15pt;
-    max-height: 30pt;
-    overflow: hidden;
+  .eachMovieCard {
     position: relative;
-    margin: 10px 0 0 5px;
+    width: 45%;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: solid 3px #fafafa;
+    transition: 0.3s;
+    height: 300px;
   }
-  
-  .eachMovieYearCardPara {
-    margin: 5px 0 5px 5px;
-    font-size: 16px;
-    font-weight: 500;
-  }
-  
-  .eachMovieHoverContainer {
-    opacity: 0;
-    position: absolute;
-    top: 0;
+  .eachMovieTitleCardPoster {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    transition: 0.5s;
+    height: 210px;
+    border-radius: 3px 3px 0 0;
+    transition: 0.3s;
   }
-  
-  .eachMovieCard:hover .eachMovieHoverContainer {
-    opacity: 1;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    transition: 0.5s;
+}
+
+@media (576px <= width <= 768px) {
+  .allMoviesCard {
+    gap: 10px;
   }
-  
-  .eachMovieCardRatingPara {
-    font-size: 24px;
-    font-weight: 800;
-    color: #212121;
-    margin: 0;
-  }
-  
-  .eachMovieCardGenrePara {
-    font-size: 24px;
-    font-weight: 600;
-    color: #212121;
-    margin: 0;
-    text-align: center;
-  }
-  
-  .eachMovieCardGenreContainer {
-    margin-top: 20px;
-  }
-  
-  .eachMovieCardStarIcon {
-    font-size: 30px;
-    margin-bottom: 5px;
-    color: #ffd700;
-  }
-  
-  .moviesPagination {
-    margin: 30px 0;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .eachMovieCardDetailsButton {
-    color: #ffffff;
-    border: none;
-    margin-top: 30px;
-    height: 44px;
-    width: 130px;
-    border-radius: 4px;
-    font-size: 20px;
-    font-weight: 500;
+  .eachMovieCard {
     position: relative;
-    top: 50px;
-    transition: 0.4s;
+    width: 30%;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: solid 3px #fafafa;
+    transition: 0.3s;
+    height: 300px;
   }
-  
-  .darkEachMovieCardDetailsButton {
-    background-color: #1565c0;
+  .eachMovieTitleCardPoster {
+    width: 100%;
+    height: 210px;
+    border-radius: 3px 3px 0 0;
+    transition: 0.3s;
   }
-  .lightEachMovieCardDetailsButton {
-    background-color: #4527a0;
+}
+
+@media (768px <= width <= 992px) {
+  .allMoviesCard {
+    gap: 20px;
   }
-  
-  .eachMovieCard:hover .eachMovieCardDetailsButton {
-    top: 0;
-    transition: 0.4s;
+  .eachMovieCard {
+    position: relative;
+    width: 30%;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: solid 3px #fafafa;
+    transition: 0.3s;
+    height: 360px;
   }
-  
+  .eachMovieTitleCardPoster {
+    width: 100%;
+    height: 270px;
+    border-radius: 3px 3px 0 0;
+    transition: 0.3s;
+  }
+}
+
+@media (992px <= width <= 1100px) {
+  .allMoviesCard {
+    gap: 20px;
+  }
+  .eachMovieCard {
+    position: relative;
+    width: 30%;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: solid 3px #fafafa;
+    transition: 0.3s;
+    height: 360px;
+  }
+  .eachMovieTitleCardPoster {
+    width: 100%;
+    height: 270px;
+    border-radius: 3px 3px 0 0;
+    transition: 0.3s;
+  }
+}
+
+@media (width >= 1100px) {
+  .allMoviesCard {
+    gap: 22px;
+  }
+  .eachMovieCard {
+    position: relative;
+    width: 20%;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: solid 3px #fafafa;
+    transition: 0.3s;
+    height: 390px;
+  }
+  .eachMovieTitleCardPoster {
+    width: 100%;
+    height: 300px;
+    border-radius: 3px 3px 0 0;
+    transition: 0.3s;
+  }
+}
+
+.eachMovieCard:hover {
+  cursor: pointer;
+
+  transition: 0.3s;
+  border: solid 3px;
+}
+
+.lightEachMovieCard:hover {
+  box-shadow: #673ab7 0px 6px 12px -2px, #673ab7 0px 3px 7px -3px;
+  border-color: #4527a0;
+}
+
+.darkEachMovieCard:hover {
+  box-shadow: #90caf9 0px 6px 12px -2px, #90caf9 0px 3px 7px -3px;
+  border-color: #1565c0;
+}
+
+.eachMovieCard:hover .eachMovieTitleCardPoster {
+  opacity: 0.4;
+  transition: 0.3s;
+}
+
+.eachMovieCard:hover .eachMovieTitleCardPara {
+  opacity: 0.3;
+  transition: 0.3s;
+}
+
+.eachMovieCard:hover .eachMovieYearCardPara {
+  opacity: 0.3;
+  transition: 0.3s;
+}
+
+.eachMovieTitleCardPara {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 15pt;
+  max-height: 30pt;
+  overflow: hidden;
+  position: relative;
+  margin: 10px 0 0 5px;
+}
+
+.eachMovieYearCardPara {
+  margin: 5px 0 5px 5px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.eachMovieHoverContainer {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  transition: 0.5s;
+}
+
+.eachMovieCard:hover .eachMovieHoverContainer {
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.5s;
+}
+
+.eachMovieCardRatingPara {
+  font-size: 24px;
+  font-weight: 800;
+  color: #212121;
+  margin: 0;
+}
+
+.eachMovieCardGenrePara {
+  font-size: 22px;
+  font-weight: 600;
+  color: #212121;
+  margin: 0;
+  text-align: center;
+}
+
+.eachMovieCardGenreContainer {
+  margin-top: 20px;
+}
+
+.eachMovieCardStarIcon {
+  font-size: 30px;
+  margin-bottom: 5px;
+  color: #ffd700;
+}
+
+.moviesPagination {
+  margin: 30px 0;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.eachMovieCardDetailsButton {
+  color: #ffffff;
+  border: none;
+  margin-top: 30px;
+  height: 44px;
+  width: 130px;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+  top: 50px;
+  transition: 0.4s;
+}
+
+.darkEachMovieCardDetailsButton {
+  background-color: #1565c0;
+}
+.lightEachMovieCardDetailsButton {
+  background-color: #4527a0;
+}
+
+.eachMovieCard:hover .eachMovieCardDetailsButton {
+  top: 0;
+  transition: 0.4s;
+}

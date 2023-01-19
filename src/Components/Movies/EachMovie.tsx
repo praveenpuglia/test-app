@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleMovie } from "../../Api/Movies/MoviesApi";
+import { fetchMovieDetails } from "../../Api/TMDB/tmdbService";
+
 import CircularProgress from "@mui/material/CircularProgress";
 import MovieDetails from "./MovieDetails";
+
 
 function EachMovie() {
   const { id } = useParams();
@@ -10,14 +12,14 @@ function EachMovie() {
   const [moviesState, setMoviesState] = useState("INITIAL");
 
   useEffect(() => {
-    fetchMovie();
+    getMovieDetails();
   }, [id]);
 
-  const fetchMovie = async () => {
+  const getMovieDetails = async () => {
     setMoviesState("LOADING");
-    const { status, data } = await getSingleMovie(id);
+    const { status, data } = await fetchMovieDetails(Number(id));
     if (status === 200) {
-      setMovieData(data.movie);
+      setMovieData(data);
       setMoviesState("SUCCESS");
     } else {
       setMoviesState("FAILED");
@@ -35,7 +37,7 @@ function EachMovie() {
           </div>
         );
       case "SUCCESS":
-        return <MovieDetails data={movieData} />;
+        return <MovieDetails Data={movieData} />;
       case "FAILED":
         return <p>ERROR</p>;
       default:
