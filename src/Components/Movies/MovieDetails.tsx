@@ -19,6 +19,7 @@ import { useAppSelector } from "../../App/hooks";
 import "./MovieDetails.css";
 import { fetchMovieReviews, fetchSimilarMovies } from "../../Api/TMDB/tmdbService";
 
+
 function MovieDetails(props: any) {
     const navigate = useNavigate();
     const { Data } = props;
@@ -47,15 +48,15 @@ function MovieDetails(props: any) {
     }, [])
 
     const getSimilarMovies = async () => {
-        const { response, data } = await fetchSimilarMovies(Data.id);
-        if (response.status === 200) {
+        const { status, data } = await fetchSimilarMovies(Data.id);
+        if (status === 200) {
             setSimilarMovies(data.results.slice(0, 4))
         }
     }
 
     const getMovieReviews = async () => {
-        const { response, data } = await fetchMovieReviews(Data.id);
-        if (response.status === 200) {
+        const { status, data } = await fetchMovieReviews(Data.id);
+        if (status === 200) {
             setReviews(data.results)
         }
     }
@@ -94,6 +95,7 @@ function MovieDetails(props: any) {
         }
         return value
     }
+
     const textStyles = {
         color: ThemeMenu.theme ? "#bdc8f0" : "#212121"
     }
@@ -290,14 +292,14 @@ function MovieDetails(props: any) {
                     : null}
             </div>
             {Data.trailer ?
-                <Dialog open={openDialog} maxWidth="lg" fullWidth>
+                <Dialog open={openDialog} maxWidth="lg" fullWidth PaperProps={{ style: { borderRadius: 10 } }}>
                     <div className="movieDetailsTrailerDialogTitleContainer">
                         <p className="movieDetailsTrailerHeading">Trailer</p>
                         <AiOutlineClose className="movieDetailsTrailerCloseIcon" onClick={() => { setOpenDialog(false) }} />
                     </div>
-                    <iframe height="100%" width="100%" src={`https://www.youtube.com/embed/${Data.trailer.key}?rel=0&autoplay=1`}
+                    <iframe height={window.innerWidth > 819 ? "480px" : "300px"} width="100%" src={`https://www.youtube.com/embed/${Data.trailer.key}?rel=0&autoplay=1`}
                         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen style={{ border: "none" }} ></iframe>
+                        allowFullScreen style={{ border: "none", background: "black" }} ></iframe>
                 </Dialog>
                 : null}
         </div>

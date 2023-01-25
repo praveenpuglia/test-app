@@ -8,6 +8,13 @@ import "./Movies.css";
 import { useAppSelector } from "../../App/hooks";
 import { fetchMovieGenres, fetchMovies } from "../../Api/TMDB/tmdbService";
 
+enum apiStatus {
+  INITIAL = "INITIAL",
+  LOADING = "LOADING",
+  SUCCESS = "SUCCESS",
+  FAILED = "FAILED"
+}
+
 function Movies() {
   const { search } = useLocation();
   const navigate = useNavigate();
@@ -15,31 +22,31 @@ function Movies() {
   const [page, setPage] = useState(Number(search.split("=")[1]));
   const [moviesList, setMoviesList] = useState([]);
   const [genresList, setGenresList] = useState([]);
-  const [moviesState, setMoviesState] = useState("INITIAL");
+  const [moviesState, setMoviesState] = useState(apiStatus.INITIAL);
 
   useEffect(() => {
     getGenres()
   }, [search]);
 
   const getGenres = async () => {
-    setMoviesState("LOADING");
+    setMoviesState(apiStatus.LOADING);
     const { data, status } = await fetchMovieGenres();
     if (status === 200) {
       setGenresList(data.genres)
       getMovies();
     } else {
-      setMoviesState("FAILED");
+      setMoviesState(apiStatus.FAILED);
     }
   }
 
   const getMovies = async () => {
-    setMoviesState("LOADING");
+    setMoviesState(apiStatus.LOADING);
     const { status, data } = await fetchMovies(Number(search.split("=")[1]))
     if (status === 200) {
       setMoviesList(data.results);
-      setMoviesState("SUCCESS");
+      setMoviesState(apiStatus.SUCCESS);
     } else {
-      setMoviesState("FAILED");
+      setMoviesState(apiStatus.FAILED);
     }
   };
 
@@ -55,15 +62,15 @@ function Movies() {
 
   const MoviesContainer = () => {
     switch (moviesState) {
-      case "INITIAL":
+      case apiStatus.INITIAL:
         return null;
-      case "LOADING":
+      case apiStatus.LOADING:
         return (
           <div className="dashBoardLoaderContainer">
             <CircularProgress />
           </div>
         );
-      case "SUCCESS":
+      case apiStatus.SUCCESS:
         return (
           <>
             <div className="allMoviesCard">
@@ -108,7 +115,7 @@ function Movies() {
             />
           </>
         );
-      case "FAILED":
+      case apiStatus.FAILED:
         return <p>ERROR</p>;
       default:
         return null;
