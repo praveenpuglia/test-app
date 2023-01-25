@@ -4,11 +4,16 @@ import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
 import { BsStarFill } from "react-icons/bs";
 
-
-import { getMovies } from "../../Api/Movies/MoviesApi";
 import "./Movies.css";
 import { useAppSelector } from "../../App/hooks";
-import { posterMoviesCount } from "../../Api/Dashboard/DashboardApi";
+import { fetchMovieGenres, fetchMovies } from "../../Api/TMDB/tmdbService";
+
+enum apiStatus {
+  INITIAL = "INITIAL",
+  LOADING = "LOADING",
+  SUCCESS = "SUCCESS",
+  FAILED = "FAILED"
+}
 
 function Movies() {
   const { search } = useLocation();
@@ -16,30 +21,32 @@ function Movies() {
   const ThemeMenu = useAppSelector(state => state.ThemeMenu);
   const [page, setPage] = useState(Number(search.split("=")[1]));
   const [moviesList, setMoviesList] = useState([]);
-  const [moviesState, setMoviesState] = useState("INITIAL");
-  const [posterCount, setPosterCount] = useState(100);
+  const [genresList, setGenresList] = useState([]);
+  const [moviesState, setMoviesState] = useState(apiStatus.INITIAL);
 
   useEffect(() => {
-    fetchPosterCount();
-    setPage(Number(search.split("=")[1]));
-    fetchMovies(Number(search.split("=")[1]));
-  }, []);
+    getGenres()
+  }, [search]);
 
-  const fetchPosterCount = async () => {
-    const { status, data } = await posterMoviesCount();
+  const getGenres = async () => {
+    setMoviesState(apiStatus.LOADING);
+    const { data, status } = await fetchMovieGenres();
     if (status === 200) {
-      setPosterCount(data.count);
+      setGenresList(data.genres)
+      getMovies();
+    } else {
+      setMoviesState(apiStatus.FAILED);
     }
   }
 
-  const fetchMovies = async (limit: number) => {
-    setMoviesState("LOADING");
-    const { status, data } = await getMovies(limit);
+  const getMovies = async () => {
+    setMoviesState(apiStatus.LOADING);
+    const { status, data } = await fetchMovies(Number(search.split("=")[1]))
     if (status === 200) {
-      setMoviesList(data.moviesList);
-      setMoviesState("SUCCESS");
+      setMoviesList(data.results);
+      setMoviesState(apiStatus.SUCCESS);
     } else {
-      setMoviesState("FAILED");
+      setMoviesState(apiStatus.FAILED);
     }
   };
 
@@ -49,47 +56,49 @@ function Movies() {
     fetchMovies(value);
   };
 
+  const navigateToMovie = (id: number) => {
+    navigate(`/movie/${id}`)
+  }
+
   const MoviesContainer = () => {
     switch (moviesState) {
-      case "INITIAL":
+      case apiStatus.INITIAL:
         return null;
-      case "LOADING":
+      case apiStatus.LOADING:
         return (
           <div className="dashBoardLoaderContainer">
             <CircularProgress />
           </div>
         );
-      case "SUCCESS":
+      case apiStatus.SUCCESS:
         return (
           <>
             <div className="allMoviesCard">
-              {moviesList.map((eachMovie:any) => (
+              {moviesList.map((eachMovie: any) => (
                 <div
-                  key={eachMovie._id}
+                  key={eachMovie.id}
                   className={ThemeMenu.theme ? "eachMovieCard darkEachMovieCard" : "eachMovieCard lightEachMovieCard"}
-                  onClick={() => navigate(`/movie/${eachMovie._id}`)}
+                  onClick={() => navigateToMovie(eachMovie.id)}
                 >
                   <img
-                    src={eachMovie.poster}
+                    src={`https://image.tmdb.org/t/p/original${eachMovie.backdrop_path}`}
                     alt="movie-poster"
                     className="eachMovieTitleCardPoster"
                   />
                   <p className="eachMovieTitleCardPara">{eachMovie.title}</p>
-                  <p className="eachMovieYearCardPara">{eachMovie.year}</p>
+                  <p className="eachMovieYearCardPara">{eachMovie.release_date.split("-")[0]}</p>
                   <div className="eachMovieHoverContainer">
                     <BsStarFill className="eachMovieCardStarIcon" />
                     <p className="eachMovieCardRatingPara">
-                      {eachMovie.imdb.rating} / 10
+                      {eachMovie.vote_average}
                     </p>
-                    {eachMovie.genres !== undefined ? (
-                      <div className="eachMovieCardGenreContainer">
-                        {eachMovie.genres.map((eachGenre:any) => (
-                          <p className="eachMovieCardGenrePara" key={eachGenre}>
-                            {eachGenre}
-                          </p>
-                        ))}
-                      </div>
-                    ) : null}
+                    <div className="eachMovieCardGenreContainer">
+                      {eachMovie.genre_ids.map((eachId: any) =>
+                        genresList.map((eachGenre: any) => (eachId === eachGenre.id ?
+                          <p className="eachMovieCardGenrePara" key={eachId}>{eachGenre.name}</p> : null)
+                        )
+                      )}
+                    </div>
                     <button className={ThemeMenu.theme ? "eachMovieCardDetailsButton darkEachMovieCardDetailsButton" : "eachMovieCardDetailsButton lightEachMovieCardDetailsButton"}>
                       View Details
                     </button>
@@ -98,7 +107,7 @@ function Movies() {
               ))}
             </div>
             <Pagination
-              count={Math.ceil(posterCount / 100)}
+              count={500}
               color={ThemeMenu.theme ? "primary" : "secondary"}
               page={page}
               onChange={handlePagination}
@@ -106,7 +115,7 @@ function Movies() {
             />
           </>
         );
-      case "FAILED":
+      case apiStatus.FAILED:
         return <p>ERROR</p>;
       default:
         return null;

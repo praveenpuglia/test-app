@@ -3,287 +3,306 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoLanguageSharp } from "react-icons/io5";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BiCategory, BiArrowBack } from "react-icons/bi";
-import { BsStarFill } from "react-icons/bs";
+import { BsStarFill, BsFillPlayCircleFill } from "react-icons/bs";
 import { MdSupervisorAccount } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import Dialog from '@mui/material/Dialog';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Autoplay, FreeMode, Pagination } from "swiper";
 import format from 'date-fns/format'
-
-import lightUser from "../../images/lightUser.png"
-import darkUser from "../../images/darkUser.png"
+import { useAppSelector } from "../../App/hooks";
 
 import "./MovieDetails.css";
-import { useAppSelector } from "../../App/hooks";
-import { MoviePoster, MovieTitle, MoviePlot, MovieDate, MovieGenre, MovieDetailsAwardsRatingContainer, MovieDetailsSubHeadings, MovieDetailsSubParas, HorizontalLine, EachSimilarMovieContainer, MovieDetailsCommentsMoviesHeading, MovieDetailsCommentName, MovieDetailsCommentDate, MovieDetailsCommentText, EachMovieDetailsCommentContainer } from "./styled";
-import { getMovieComments, getSimilarMovies } from "../../Api/Movies/MoviesApi";
+import { fetchMovieReviews, fetchSimilarMovies } from "../../Api/TMDB/tmdbService";
 
 
 function MovieDetails(props: any) {
     const navigate = useNavigate();
+    const { Data } = props;
     const ThemeMenu = useAppSelector(state => state.ThemeMenu);
-    const [comments, setComments] = useState([]);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [formattedBudget, setFormattedBudget] = useState("")
+    const [formattedRevenue, setFormattedRevenue] = useState("")
+    const [runTime, setRunTime] = useState("")
+    const [reviews, setReviews] = useState([])
     const [similarMovies, setSimilarMovies] = useState([]);
-    const [similarMoviesState, setSimilarMoviesState] = useState(false);
-    const [slides, setSlides] = useState(0)
-    const { data } = props;
+    const [slides, setSlides] = useState(3)
 
     useEffect(() => {
-        fetchSimilarMovies();
-        if (data.num_mflix_comments > 0) {
-            fetchComments();
-        }
-        if (window.screen.width > 100 && window.screen.width < 768) {
+        setFormattedBudget(formatCurrency(Data.budget));
+        setFormattedRevenue(formatCurrency(Data.revenue));
+        formatRuntime();
+        getSimilarMovies();
+        getMovieReviews();
+        if (window.innerWidth > 375 && window.innerWidth < 768) {
             setSlides(1)
-        } else if (window.screen.width >= 768 && window.screen.width < 1000) {
+        } else if (window.innerWidth > 768 && window.innerWidth < 1024) {
             setSlides(2)
-        } else if (window.screen.width >= 1000 && window.screen.width < 1200) {
+        } else if (window.innerWidth > 1024) {
             setSlides(3)
-        } else if (window.screen.width >= 1200) {
-            setSlides(4)
         }
     }, [])
 
-    const fetchSimilarMovies = async () => {
-        let fetchData = ""
-        fetchData += `genres=${data.genres.join("%20")}`
-        fetchData += `&year=${data.year}`
-        fetchData += `&title=${data.title}`
-        const { status, responseData } = await getSimilarMovies(fetchData);
+    const getSimilarMovies = async () => {
+        const { status, data } = await fetchSimilarMovies(Data.id);
         if (status === 200) {
-            setSimilarMoviesState(true);
-            setSimilarMovies(responseData.similarMoviesList);
+            setSimilarMovies(data.results.slice(0, 4))
         }
     }
 
-    const fetchComments = async () => {
-        const { status, responseData } = await getMovieComments(data._id);
+    const getMovieReviews = async () => {
+        const { status, data } = await fetchMovieReviews(Data.id);
         if (status === 200) {
-            setComments(responseData.comments);
+            setReviews(data.results)
         }
     }
 
-    const styles = {
-        iconColor: {
-            color: ThemeMenu.theme ? "#1565C0" : "#4527a0"
-        },
-    } as const;
+    const formatRuntime = () => {
+        let hours = Math.floor(Data.runtime / 60)
+        let minutes = Data.runtime - (hours * 60)
+        let time = ""
+        if (hours !== 0) {
+            time += hours + "h"
+        }
+        if (minutes !== 0) {
+            time += " " + minutes + "m"
+        }
+        setRunTime(time);
+    }
+
+    const formatCurrency = (amount: number) => {
+        let revenue = String(amount).split("").reverse()
+        let count = 1;
+        let newRevenue = []
+        let value = ""
+        for (let eachNum of revenue) {
+            if (count === 3) {
+                newRevenue.push(eachNum)
+                newRevenue.push(",")
+                count = 1
+            } else {
+                newRevenue.push(eachNum)
+                count += 1
+            }
+        }
+        value = newRevenue.reverse().join("")
+        if (value[0] === ",") {
+            value = value.slice(1, value.length)
+        }
+        return value
+    }
+
+    const textStyles = {
+        color: ThemeMenu.theme ? "#bdc8f0" : "#212121"
+    }
+
+    const headingStyles = {
+        color: ThemeMenu.theme ? "#1565C0" : "#4527A0"
+    }
+
+    const backgroundColorStyle = {
+        backgroundColor: ThemeMenu.theme ? "#90CAF9" : "#B39DDB"
+    }
+
+    const headingBackgroundColorStyle = {
+        backgroundColor: ThemeMenu.theme ? "#1565C0" : "#4527A0"
+    }
+
+    const swiperBackgroundColorStyle = {
+        backgroundColor: ThemeMenu.theme ? "#E3F2FD" : "#EDE7F6"
+    }
+
+    const castBackgroundColorStyle = {
+        backgroundColor: ThemeMenu.theme ? "#111936" : "#ffffff"
+    }
 
     return (
-        <div className="movieDetailMainContainer">
-            <BiArrowBack className="movieDetailsBackArrowButton"
-                style={{ color: ThemeMenu.theme ? "#1565C0" : "#4527a0" }}
-                onClick={() => { navigate(-1) }} />
-            <div className="movieDetailsHeaderContainer">
-                <MoviePoster
-                    src={data.poster}
-                    alt="movie-poster"
-                    isDark={ThemeMenu.theme}
-                />
-                <div className="movieDetailsHeaderSubContainer">
-                    <MovieTitle isDark={ThemeMenu.theme}>{data.title}</MovieTitle>
-                    <MoviePlot isDark={ThemeMenu.theme}>{data.plot}</MoviePlot>
-                    <MovieDate isDark={ThemeMenu.theme}>
-                        <FaRegCalendarAlt className="movieDetailsMovieCalendarIcon" style={styles.iconColor} />
-                        {format(new Date(data.released), 'MMMM do yyyy')}
-                    </MovieDate>
-                    <div className="movieDetailsMovieGenreContainer">
-                        <BiCategory className="movieDetailsMovieGenreIcon" style={styles.iconColor} />
-                        {data.genres.map((eachGenre: any) =>
-                            <MovieGenre isDark={ThemeMenu.theme} key={eachGenre}>{eachGenre}</MovieGenre>)}
-                    </div>
-                    <div className="movieDetailsHeaderMiniContainer">
-                        {data.languages.length > 0 ?
-                            <div className="movieDetailsMovieLanguageContainer">
-                                <IoLanguageSharp className="movieDetailsMovieLanguageIcon" style={styles.iconColor} />
-                                {data.languages.map((eachLanguage: any) =>
-                                    <MovieGenre isDark={ThemeMenu.theme} key={eachLanguage}>{eachLanguage}</MovieGenre>)}
-                            </div>
-                            :
-                            null}
-                        {data.countries.length > 0 ?
-                            <div className="movieDetailsMovieLocationContainer">
-                                <HiOutlineLocationMarker className="movieDetailsMovieLocationIcon" style={styles.iconColor} />
-                                {data.countries.map((eachCountry: any) =>
-                                    <MovieGenre isDark={ThemeMenu.theme} className="movieDetailsMovieLocation" key={eachCountry}>{eachCountry}</MovieGenre>)}
-                            </div>
-                            :
-                            null}
-                    </div>
-                    <MovieDetailsAwardsRatingContainer isDark={ThemeMenu.theme} >
-                        {data.imdb.rating ?
-                            <div className="movieDetailsRatingAndAwardsSubContainer" style={{ backgroundColor: "#fff8e1" }}>
-                                <p className="movieDetailsMovieIMDB">IMDB</p>
-                                <div className="movieDetailsMovieIMDBSubContainer">
-                                    <div className="movieDetailsMovieIMDBSubRatingsContainer">
-                                        <p className="movieDetailsMovieRatingReviewsPara">{data.imdb.rating.$numberDecimal}</p>
-                                        <BsStarFill className="movieDetailsRatingStarIcon" />
-                                    </div>
-                                    <div className="movieDetailsMovieIMDBSubRatingsContainer">
-                                        <p className="movieDetailsMovieRatingReviewsPara">{data.imdb.votes}</p>
-                                        <MdSupervisorAccount className="movieDetailsRatingUserCountIcon" />
-                                    </div>
-                                </div>
+        <div >
+            <button className="movieDetailsBackArrowButton" onClick={() => navigate(-1)}>
+                <BiArrowBack style={headingStyles} className="movieDetailsBackArrowIcon" />
+            </button>
 
+            <div className="movieDetailsContainer">
+                <div className="movieDetailsHeadContainer">
+                    <div className="movieDetailsPosterContainer">
+                        <img src={`https://image.tmdb.org/t/p/original${Data.poster_path}`} alt="movie-poster" className="movieDetailsPoster" />
+                    </div>
+                    <div className="movieDetailsSubHeadContainer">
+                        <div className="movieDetailsTrailerHeadContainer">
+                            <div className="movieDetailsTitleContainer">
+                                <p className="movieDetailsTitle" style={headingStyles}>{Data.title}</p>
+                                <p className="movieDetailsTagline" style={textStyles}>{Data.tagline}</p>
                             </div>
-                            : null}
-                        {data.tomatoes && data.tomatoes.critic && data.tomatoes.viewer ?
-                            <div className="movieDetailsRatingAndAwardsSubContainer" style={{ backgroundColor: "#ffab91" }}>
-                                <p className="movieDetailsMovieTomato">Rotten tomato</p>
-                                <div className="movieDetailsMovieIMDBSubContainer">
-                                    <div className="movieDetailsMovieIMDBSubRatingsContainer">
-                                        <p className="movieDetailsMovieRatingReviewsPara">{(data.tomatoes.critic.meter + data.tomatoes.viewer.meter) / 2}</p>
-                                        <BsStarFill className="movieDetailsRatingStarIcon" />
-                                    </div>
-                                    <div className="movieDetailsMovieIMDBSubRatingsContainer">
-                                        <p className="movieDetailsMovieRatingReviewsPara">{data.tomatoes.critic.numReviews + data.tomatoes.viewer.numReviews}</p>
-                                        <MdSupervisorAccount className="movieDetailsRatingUserCountIcon" />
-                                    </div>
+                            {Data.trailer ?
+                                <div className="movieDetailsTrailerContainer" onClick={() => setOpenDialog(true)}>
+                                    <BsFillPlayCircleFill className="movieDetailsPlayTrailerIcon" />
+                                    <p className="movieDetailsPlayTrailer" style={textStyles}>Play Trailer</p>
+                                </div>
+                                : null}
+                        </div>
+
+                        <p className="movieDetailsReleasedDate" style={textStyles}>
+                            <FaRegCalendarAlt className="movieDetailsCalendarIcon" style={headingStyles} />
+                            {format(new Date(Data.release_date), "do MMM yyyy")} </p>
+
+                        <div className="movieDetailsGenresContainer">
+                            <BiCategory className="movieDetailsGenresIcon" style={headingStyles} />
+                            {Data.genres.map((eachGenre: { id: number, name: string }) =>
+                                <p className="movieDetailsGenre" key={eachGenre.id} style={backgroundColorStyle}>{eachGenre.name}</p>
+                            )}
+                        </div>
+
+                        <div className="movieDetailsLanguageAndCountryContainer">
+                            {Data.spoken_languages.length > 0 ?
+                                <div className="movieDetailsLanguagesContainer">
+                                    <IoLanguageSharp className="movieDetailsLanguageIcon" style={headingStyles} />
+                                    {Data.spoken_languages.map((eachLanguage: { english_name: string, iso_639_1: string, name: string }) =>
+                                        <p className="movieDetailsGenre" key={eachLanguage.iso_639_1} style={backgroundColorStyle}>{eachLanguage.english_name}</p>
+                                    )}
+                                </div>
+                                : null}
+                            {Data.production_countries.length > 0 ?
+                                <div className="movieDetailsCountriesContainer">
+                                    <HiOutlineLocationMarker className="movieDetailsCountriesIcon" style={headingStyles} />
+                                    {Data.production_countries.map((eachCountry: { iso_3166_1: string, name: string }) =>
+                                        <p className="movieDetailsGenre" key={eachCountry.iso_3166_1} style={backgroundColorStyle}>{eachCountry.name}</p>
+                                    )}
+                                </div>
+                                : null}
+                        </div>
+                        <div className="movieDetailsImdbContainer">
+                            <p className="movieDetailsImdbHeading">IMDB</p>
+                            <div className="movieDetailsSubImdbContainer">
+                                <div>
+                                    <BsStarFill className="movieDetailsImdbStarIcon" />
+                                    <p className="movieDetailsImdbRating">
+                                        {String(Data.vote_average).split(".")[0]}.{String(Data.vote_average).split(".")[1].slice(0, 1)}
+                                    </p>
+                                </div>
+                                <div>
+                                    <MdSupervisorAccount className="movieDetailsImdbUserIcon" />
+                                    <p className="movieDetailsImdbRating">{Data.vote_count}</p>
                                 </div>
                             </div>
-                            : null}
-                        {data.awards.wins > 0 ?
-                            <div className="movieDetailsRatingAndAwardsSubContainer" style={{ backgroundColor: "#b9f6ca" }}>
-                                <p className="movieDetailsMovieAward">Awards</p>
-                                <p className="movieDetailsMovieRatingReviewsPara" style={{ marginTop: 15 }}>{data.awards.text}</p>
+                        </div>
+                        {Data.directors ?
+                            <div className="movieDetailsDirectorContainer" style={backgroundColorStyle}>
+                                <p className="movieDetailsDirectorHeading" style={headingBackgroundColorStyle}>
+                                    {Data.directors.length > 1 ? "Directors" : "Director"}</p>
+                                {Data.directors.map((eachDirector: any) =>
+                                    <p key={eachDirector.id} className="eachMovieDetailsDirector" >{eachDirector.name}</p>)}
                             </div>
                             : null}
-                    </MovieDetailsAwardsRatingContainer>
-                </div>
-            </div>
-            <div className="movieDetailsBodyContainer">
-                <div className="movieDetailsBodyPlotContainer">
-                    {data.fullplot !== undefined ?
-                        <>
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>Plot</MovieDetailsSubHeadings>
-                            <MovieDetailsSubParas isDark={ThemeMenu.theme}>{data.fullplot}</MovieDetailsSubParas>
-                        </> : null
-                    }
-                    {data.tomatoes && data.tomatoes.consensus !== undefined ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>critics consensus</MovieDetailsSubHeadings>
-                            <MovieDetailsSubParas isDark={ThemeMenu.theme}>{data.tomatoes.consensus}</MovieDetailsSubParas>
-                        </>
-                        : null}
-                    {data.tomatoes && data.tomatoes.boxOffice !== undefined ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>Box Office</MovieDetailsSubHeadings>
-                            <MovieDetailsSubParas isDark={ThemeMenu.theme}>{data.tomatoes.boxOffice}</MovieDetailsSubParas>
-                        </>
-                        : null}
-                    {data.tomatoes && data.tomatoes.production !== undefined ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>Production</MovieDetailsSubHeadings>
-                            <MovieDetailsSubParas isDark={ThemeMenu.theme}>{data.tomatoes.production}</MovieDetailsSubParas>
-                        </>
-                        : null}
-                    {data.tomatoes && data.tomatoes.website !== undefined ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>Website</MovieDetailsSubHeadings>
-                            <a href={data.tomatoes.website} target="_blank" className="movieDetailsMovieWebsite">
-                                <MovieDetailsSubParas isDark={ThemeMenu.theme}>{data.tomatoes.website}</MovieDetailsSubParas></a>
-                        </>
-                        : null}
-                </div>
-                <div className="movieDetailsBodyCastContainer">
-                    {data.cast.length > 0 ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} className="hideHorizontalLineInLarge" />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>Cast</MovieDetailsSubHeadings>
-                            <div className="movieDetailsMovieCastContainer">
-                                {data.cast.map((eachCast: any) =>
-                                    <div className="movieDetailsMovieCastSubContainer" key={eachCast}>
-                                        <img src={ThemeMenu.theme ? darkUser : lightUser} alt="user-icon" width={30} style={{ marginRight: 5 }} />
-                                        <MovieDetailsSubParas isDark={ThemeMenu.theme} >{eachCast}</MovieDetailsSubParas>
-                                    </div>
-                                )}
+                        {Data.writers ?
+                            <div className="movieDetailsDirectorContainer" style={backgroundColorStyle}>
+                                <p className="movieDetailsDirectorHeading" style={headingBackgroundColorStyle}>
+                                    {Data.writers.length > 1 ? "Writers" : "Writer"}
+                                </p>
+                                {Data.writers.map((eachWriter: any) =>
+                                    <p key={eachWriter.id} className="eachMovieDetailsDirector" >{eachWriter.name}</p>)}
                             </div>
-
-                        </>
-                        : null}
-                    {data.directors.length > 0 ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>{data.directors.length < 2 ? "Director" : "Directors"}</MovieDetailsSubHeadings>
-                            <div className="movieDetailsMovieCastContainer">
-                                {data.directors.map((eachDirector: any) =>
-                                    <div className="movieDetailsMovieCastSubContainer" key={eachDirector}>
-                                        <img src={ThemeMenu.theme ? darkUser : lightUser} alt="user-icon" width={30} style={{ marginRight: 5 }} />
-                                        <MovieDetailsSubParas isDark={ThemeMenu.theme} >{eachDirector}</MovieDetailsSubParas>
-                                    </div>
-
-                                )}
-                            </div>
-
-                        </>
-                        : null}
-                    {data.writers.length > 0 ?
-                        <>
-                            <HorizontalLine isDark={ThemeMenu.theme} />
-                            <MovieDetailsSubHeadings isDark={ThemeMenu.theme}>{data.writers.length < 2 ? "Writer" : "Writers"}</MovieDetailsSubHeadings>
-                            <div className="movieDetailsMovieCastContainer">
-                                {data.writers.map((eachWriter: any) =>
-                                    <div className="movieDetailsMovieCastSubContainer" key={eachWriter}>
-                                        <img src={ThemeMenu.theme ? darkUser : lightUser} alt="user-icon" width={30} style={{ marginRight: 5 }} />
-                                        <MovieDetailsSubParas isDark={ThemeMenu.theme} >{eachWriter}</MovieDetailsSubParas>
-                                    </div>
-                                )}
-                            </div>
-                        </>
-                        : null}
-                </div>
-
-            </div>
-            {similarMoviesState ?
-                <div>
-                    <HorizontalLine isDark={ThemeMenu.theme} />
-                    <MovieDetailsCommentsMoviesHeading isDark={ThemeMenu.theme}>Similar Movies</MovieDetailsCommentsMoviesHeading>
-                    <div className="similarMoviesContainer">
-                        {similarMovies.map((eachMovie: any) =>
-                            <EachSimilarMovieContainer isDark={ThemeMenu.theme} onClick={() => navigate(`/movie/${eachMovie._id}`)} key={eachMovie._id} >
-                                <img src={eachMovie.poster} alt="movie-poster" className="similarMoviePoster" />
-                                <p className="eachSimilarMovieTitle">{eachMovie.title}</p>
-                            </EachSimilarMovieContainer>)}
+                            : null}
                     </div>
                 </div>
+                <hr className="eachMovieDetailsHorizontalLine" style={headingBackgroundColorStyle} />
+                <div className="eachMovieDetailsBodyContainer">
+                    <div className="eachMovieDetailsBodySubContainer">
+                        <p className="movieDetailsBodyHeading" style={headingStyles}>Overview</p>
+                        <p className="movieDetailsBodyPara" style={textStyles}>{Data.overview}</p>
+                        <hr className="eachMovieDetailsHorizontalLine" style={headingBackgroundColorStyle} />
+                        <p className="movieDetailsBodyHeading" style={headingStyles}>Runtime</p>
+                        <p className="movieDetailsBodyPara" style={textStyles}>{runTime}</p>
+                        <hr className="eachMovieDetailsHorizontalLine" style={headingBackgroundColorStyle} />
+                        <div className="movieDetailsBudgetContainer">
+                            <div>
+                                <p className="movieDetailsBodyHeading" style={headingStyles}>Budget</p>
+                                <p className="movieDetailsBodyPara" style={textStyles} >${formattedBudget}</p>
+                            </div>
+                            <div>
+                                <p className="movieDetailsBodyHeading" style={headingStyles}>Revenue</p>
+                                <p className="movieDetailsBodyPara" style={textStyles}>${formattedRevenue}</p>
+                            </div>
+                        </div>
+                        {Data.homepage ?
+                            <>
+                                <hr className="eachMovieDetailsHorizontalLine" style={headingBackgroundColorStyle} />
+                                <p className="movieDetailsBodyHeading" style={headingStyles}>Website</p>
+                                <a className="movieDetailsBodyPara movieDetailsWebsiteLink" href={Data.homepage} target="_blank">{Data.homepage}</a>
+                            </> : null}
+                    </div>
+                    <div className="eachMovieDetailsCastContainer">
+                        <hr className="eachMovieDetailsHorizontalLine movieDetailsSmallHr" style={headingBackgroundColorStyle} />
+                        <p className="movieDetailsBodyHeading" style={headingStyles}>Cast</p>
+                        <div className="eachMovieDetailsCastSubContainer">
+                            {Data.cast.map((eachCast: any) =>
+                                <div key={eachCast.id} className="movieDetailsEachCastContainer" style={castBackgroundColorStyle}>
+                                    <img src={`https://image.tmdb.org/t/p/original/${eachCast.profile_path}`} alt="cast-picture" className="eachMovieDetailsProfilePicture" />
+                                    <p className="eachMovieDetailsCastName" style={textStyles}>{eachCast.name}</p>
+                                    <p className="eachMovieDetailsCharacterName" style={textStyles}>{eachCast.character}</p>
+                                </div>)}
+                        </div>
+                    </div>
+                </div>
+                {similarMovies.length > 0 ?
+                    <>
+                        <hr className="eachMovieDetailsCastBottomHorizontalLine" style={headingBackgroundColorStyle} />
+                        <p className="movieDetailsBodyHeading" style={headingStyles}>Similar Movies</p>
+                        <div className="movieDetailsSimilarMoviesContainer">
+                            {similarMovies.map((eachMovie: any) =>
+                                <div key={eachMovie.id} className="movieDetailsEachSimilarMovieContainer" style={castBackgroundColorStyle} onClick={() => navigate(`/movie/${eachMovie.id}`)}>
+                                    <img src={`https://image.tmdb.org/t/p/original${eachMovie.poster_path}`} alt="movie-poster" className="movieDetailsEachSimilarMoviePoster" />
+                                    <p className="eachMovieDetailsReviewAuthor movieDetailsAddPadding" style={headingStyles}>{eachMovie.title}</p>
+                                    <p className="eachMovieDetailsReviewDate movieDetailsAddPadding" style={textStyles}>{eachMovie.release_date.split("-")[0]}</p>
+                                </div>
+                            )}
+                        </div>
+                    </>
+                    : null}
+                {reviews.length > 0 ?
+                    <>
+                        <hr className="eachMovieDetailsHorizontalLine" style={headingBackgroundColorStyle} />
+                        <p className="movieDetailsBodyHeading" style={headingStyles}>Review ({reviews.length})</p>
+                        <Swiper
+                            slidesPerView={slides}
+                            spaceBetween={10}
+                            freeMode={true}
+                            autoplay={{
+                                delay: 1500,
+                                disableOnInteraction: false,
+                            }}
+                            pagination={{
+                                dynamicBullets: true,
+                            }}
+                            modules={[Autoplay, FreeMode, Pagination]}
+                            className="mySwiper"
+                        >
+                            {reviews.map((eachReview: any) =>
+                                <SwiperSlide key={eachReview.id} style={swiperBackgroundColorStyle}>
+                                    <p className="eachMovieDetailsReviewAuthor" style={headingStyles}>{eachReview.author}</p>
+                                    <p className="eachMovieDetailsReviewDate" >{format(new Date(eachReview.created_at), "do MMM yyyy")}</p>
+                                    <p className="eachMovieDetailsReviewContent" >{eachReview.content}</p>
+                                </SwiperSlide>
+                            )}
+                        </Swiper>
+                    </>
+                    : null}
+            </div>
+            {Data.trailer ?
+                <Dialog open={openDialog} maxWidth="lg" fullWidth PaperProps={{ style: { borderRadius: 10 } }}>
+                    <div className="movieDetailsTrailerDialogTitleContainer">
+                        <p className="movieDetailsTrailerHeading">Trailer</p>
+                        <AiOutlineClose className="movieDetailsTrailerCloseIcon" onClick={() => { setOpenDialog(false) }} />
+                    </div>
+                    <iframe height={window.innerWidth > 819 ? "480px" : "300px"} width="100%" src={`https://www.youtube.com/embed/${Data.trailer.key}?rel=0&autoplay=1`}
+                        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen style={{ border: "none", background: "black" }} ></iframe>
+                </Dialog>
                 : null}
-            {data.num_mflix_comments > 0 ? <div>
-                <HorizontalLine isDark={ThemeMenu.theme} />
-                <MovieDetailsCommentsMoviesHeading isDark={ThemeMenu.theme}>Comments ({data.num_mflix_comments})</MovieDetailsCommentsMoviesHeading>
-                <Swiper
-                    slidesPerView={slides}
-                    spaceBetween={10}
-                    freeMode={true}
-                    pagination={{
-                        dynamicBullets: true,
-                    }}
-                    autoplay={{
-                        delay: 1500,
-                        disableOnInteraction: false,
-                    }}
-                    modules={[Autoplay, FreeMode, Pagination]}
-                    className="moviesCommentsSwiper"
-                >
-                    {comments.map((eachComment: any) =>
-                        <SwiperSlide key={eachComment._id}>
-                            <EachMovieDetailsCommentContainer isDark={ThemeMenu.theme} >
-                                <MovieDetailsCommentName isDark={ThemeMenu.theme}>{eachComment.name}</MovieDetailsCommentName>
-                                <MovieDetailsCommentDate isDark={ThemeMenu.theme}>
-                                    {format(new Date(data.released), 'MMMM do yyyy')}</MovieDetailsCommentDate>
-                                <MovieDetailsCommentText isDark={ThemeMenu.theme}>{eachComment.text}</MovieDetailsCommentText>
-                            </EachMovieDetailsCommentContainer>
-                        </SwiperSlide>
-                    )}
-                </Swiper>
-            </div> : null}
-        </div >
+        </div>
     );
 }
 
