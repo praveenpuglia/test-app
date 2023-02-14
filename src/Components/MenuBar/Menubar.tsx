@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../../App/hooks";
 import { closeMenu } from "../../features/state";
-import "./menubar.css";
+import "./Menubar.css";
 import MenuIcons from "./MenuIcons";
 import { LinkPara, SelectedLinkPara } from "./styled";
 
